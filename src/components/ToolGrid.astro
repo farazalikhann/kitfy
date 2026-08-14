@@ -9,22 +9,22 @@ import ToolCard from './ToolCard.astro';
     <p class="font-body text-base text-fg-secondary">Search by name, or filter by what you are trying to do.</p>
   </div>
 
-  <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-    <div class="relative w-full sm:max-w-xs">
+  <div class="mt-8 flex flex-col gap-4 min-[720px]:flex-row min-[720px]:items-center min-[720px]:justify-between">
+    <div class="relative w-full min-[720px]:w-[320px] min-[720px]:shrink-0">
       <label for="tool-search" class="sr-only">Search tools</label>
       <input
         id="tool-search"
         type="search"
         placeholder="Search tools"
         autocomplete="off"
-        class="w-full rounded-button border border-border bg-surface px-4 py-3 font-body text-sm text-fg placeholder:text-muted"
+        class="h-11 w-full rounded-button border border-border bg-surface px-4 font-body text-sm text-fg placeholder:text-muted"
       />
     </div>
 
-    <div id="tool-filters" class="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+    <div id="tool-filters" class="flex flex-wrap gap-2 min-[720px]:shrink-0" role="group" aria-label="Filter by category">
       <button
         type="button"
-        class="kf-chip is-active rounded-chip border border-border px-3 py-1.5 font-body text-sm font-medium text-fg-secondary"
+        class="kf-chip is-active inline-flex h-11 items-center justify-center rounded-chip border border-border px-4 font-body text-sm font-medium text-fg-secondary"
         data-category="all"
       >
         All
@@ -32,7 +32,7 @@ import ToolCard from './ToolCard.astro';
       {categories.map((category) => (
         <button
           type="button"
-          class="kf-chip rounded-chip border border-border px-3 py-1.5 font-body text-sm font-medium text-fg-secondary"
+          class="kf-chip inline-flex h-11 items-center justify-center rounded-chip border border-border px-4 font-body text-sm font-medium text-fg-secondary"
           data-category={category.toLowerCase()}
         >
           {category}
@@ -41,12 +41,8 @@ import ToolCard from './ToolCard.astro';
     </div>
   </div>
 
-  <div id="tool-grid" class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    {tools.map((tool) => (
-      <div class="kf-tool-grid-item">
-        <ToolCard tool={tool} />
-      </div>
-    ))}
+  <div id="tool-grid" class="mt-8 grid items-stretch gap-6 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
+    {tools.map((tool) => <ToolCard tool={tool} />)}
   </div>
 
   <p id="tool-empty" class="hidden py-16 text-center font-body text-base text-fg-secondary">
@@ -74,7 +70,7 @@ import ToolCard from './ToolCard.astro';
   const resetButton = document.getElementById('tool-reset');
 
   if (searchInput && filterGroup && grid && emptyState) {
-    const items = Array.from(grid.querySelectorAll<HTMLElement>('.kf-tool-grid-item'));
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('[data-name]'));
     const chips = Array.from(filterGroup.querySelectorAll<HTMLButtonElement>('.kf-chip'));
     let activeCategory = 'all';
 
@@ -82,10 +78,7 @@ import ToolCard from './ToolCard.astro';
       const query = searchInput.value.trim().toLowerCase();
       let visibleCount = 0;
 
-      for (const item of items) {
-        const card = item.querySelector<HTMLElement>('[data-name]');
-        if (!card) continue;
-
+      for (const card of cards) {
         const matchesCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
         const matchesQuery =
           query === '' ||
@@ -94,7 +87,7 @@ import ToolCard from './ToolCard.astro';
           card.dataset.category?.includes(query);
 
         const visible = matchesCategory && matchesQuery;
-        item.classList.toggle('hidden', !visible);
+        card.classList.toggle('hidden', !visible);
         if (visible) visibleCount += 1;
       }
 

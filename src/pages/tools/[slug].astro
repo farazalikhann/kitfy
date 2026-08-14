@@ -126,7 +126,7 @@ const softwareSchema = {
   {related.length > 0 && (
     <section class="mx-auto max-w-(--container-content) px-4 py-12 sm:px-6 sm:py-16">
       <h2 class="text-xl font-display font-bold tracking-(--tracking-display) text-fg">More tools like this</h2>
-      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-8 grid items-stretch gap-6 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
         {related.map((relatedTool) => <ToolCard tool={relatedTool} />)}
       </div>
     </section>

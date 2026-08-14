@@ -15,12 +15,12 @@ const fallbackId = `kf-fallback-${tool.slug}`;
 
 <Element
   {...linkProps}
-  class="kf-tool-card group flex flex-col gap-4 rounded-card border border-border bg-surface p-6 no-underline transition-transform duration-200 hover:-translate-y-1"
+  class="kf-tool-card group grid items-stretch rounded-card border border-border bg-surface p-6 no-underline transition-transform duration-200 hover:-translate-y-1"
   data-name={tool.name.toLowerCase()}
   data-tagline={tool.tagline.toLowerCase()}
   data-category={tool.category.toLowerCase()}
 >
-  <div class="flex items-start justify-between gap-3">
+  <div class="flex w-full items-start justify-between gap-3">
     <span
       class="flex h-12 w-12 shrink-0 items-center justify-center rounded-button border border-line bg-white transition-[transform,border-color] duration-200 group-hover:translate-x-[3px] group-hover:-translate-y-[3px] group-hover:border-emerald dark:border-white/10 dark:bg-ink-2 dark:group-hover:border-mint"
     >
@@ -45,16 +45,16 @@ const fallbackId = `kf-fallback-${tool.slug}`;
     )}
   </div>
 
-  <div class="flex flex-1 flex-col gap-1">
+  <div class="flex w-full flex-col gap-1">
     <h3 class="font-display text-lg font-bold text-fg">{tool.name}</h3>
-    <p class="font-body text-sm text-fg-secondary">{tool.tagline}</p>
+    <p class="line-clamp-3 w-full font-body text-sm text-fg-secondary">{tool.tagline}</p>
   </div>
 
-  <div class="flex items-center justify-between gap-2">
+  <div class="flex w-full min-w-0 items-center justify-between gap-3">
     {tool.domain ? (
-      <span class="font-mono text-xs text-emerald dark:text-mint">{tool.domain}</span>
+      <span class="min-w-0 truncate font-mono text-xs text-emerald dark:text-mint">{tool.domain}</span>
     ) : (
-      <span class="font-mono text-xs text-muted">domain TBD</span>
+      <span class="min-w-0 truncate font-mono text-xs text-muted">domain TBD</span>
     )}
     {isLive && (
       <svg
@@ -73,6 +73,15 @@ const fallbackId = `kf-fallback-${tool.slug}`;
     )}
   </div>
 </Element>
+
+<style>
+  .kf-tool-card {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    row-gap: 1rem;
+    height: 100%;
+  }
+</style>
 
 <script>
   // Favicons are fetched from third-party sites at build time and can go

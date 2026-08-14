@@ -120,14 +120,16 @@
   --text-4xl: 3.875rem; /* 62px */
   --text-4xl--line-height: 1.05;
 
-  /* Spacing scale, strict 8px grid */
-  --spacing-1: 0.5rem; /* 8px */
-  --spacing-2: 1rem; /* 16px */
-  --spacing-3: 1.5rem; /* 24px */
-  --spacing-4: 2.5rem; /* 40px */
-  --spacing-5: 4rem; /* 64px */
-  --spacing-6: 6rem; /* 96px */
-  --spacing-7: 8rem; /* 128px */
+  /* Spacing scale, strict 8px grid: 8, 16, 24, 40, 64, 96, 128.
+     Tailwind v4 generates every numbered utility (p-1, gap-6, m-4, ...)
+     straight off a single --spacing multiplier (0.25rem per step), and
+     every value on our 8px grid already lands on an exact multiple of
+     that 4px unit. So the scale needs no override, just this mapping:
+       8px = *-2   16px = *-4   24px = *-6   40px = *-10
+       64px = *-16 96px = *-24  128px = *-32
+     Do not redefine --spacing-1..7 here: those names collide with
+     Tailwind's own utility-generating tokens and silently remap p-6,
+     gap-4 etc. site-wide to the wrong pixel values. */
 
   /* Shape, taken from the logo's 11/40 corner ratio */
   --radius-chip: 10px;
@@ -181,15 +183,15 @@
     z-index: 100;
     background: var(--color-accent);
     color: var(--ink);
-    padding: var(--spacing-1) var(--spacing-2);
+    padding: 0.5rem 1rem;
     border-radius: var(--radius-chip);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
   }
 
   .skip-link:focus {
-    left: var(--spacing-2);
-    top: var(--spacing-2);
+    left: 1rem;
+    top: 1rem;
   }
 
   /* Header logo swap: the primary lockup only reads on light surfaces,
