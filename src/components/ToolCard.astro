@@ -1,0 +1,92 @@
+---
+import type { Tool } from '../data/tools';
+import TileMark from './TileMark.astro';
+
+export interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+const isLive = Boolean(tool.url);
+const Element = isLive ? 'a' : 'div';
+const linkProps = isLive ? { href: tool.url, target: '_blank', rel: 'noopener' } : {};
+const fallbackId = `kf-fallback-${tool.slug}`;
+---
+
+<Element
+  {...linkProps}
+  class="kf-tool-card group flex flex-col gap-4 rounded-card border border-border bg-surface p-6 no-underline transition-transform duration-200 hover:-translate-y-1"
+  data-name={tool.name.toLowerCase()}
+  data-tagline={tool.tagline.toLowerCase()}
+  data-category={tool.category.toLowerCase()}
+>
+  <div class="flex items-start justify-between gap-3">
+    <span
+      class="flex h-12 w-12 shrink-0 items-center justify-center rounded-button border border-line bg-white transition-[transform,border-color] duration-200 group-hover:translate-x-[3px] group-hover:-translate-y-[3px] group-hover:border-emerald dark:border-white/10 dark:bg-ink-2 dark:group-hover:border-mint"
+    >
+      {tool.favicon ? (
+        <img
+          src={tool.favicon}
+          alt=""
+          width="28"
+          height="28"
+          loading="lazy"
+          class="h-7 w-7 object-contain"
+          data-fallback={fallbackId}
+        />
+      ) : (
+        <TileMark class="h-7 w-7 text-muted opacity-40" />
+      )}
+      <TileMark id={fallbackId} class="hidden h-7 w-7 text-muted opacity-40" />
+    </span>
+
+    {!isLive && (
+      <span class="rounded-chip bg-bg px-2.5 py-1 font-body text-xs font-medium text-muted">Coming soon</span>
+    )}
+  </div>
+
+  <div class="flex flex-1 flex-col gap-1">
+    <h3 class="font-display text-lg font-bold text-fg">{tool.name}</h3>
+    <p class="font-body text-sm text-fg-secondary">{tool.tagline}</p>
+  </div>
+
+  <div class="flex items-center justify-between gap-2">
+    {tool.domain ? (
+      <span class="font-mono text-xs text-emerald dark:text-mint">{tool.domain}</span>
+    ) : (
+      <span class="font-mono text-xs text-muted">domain TBD</span>
+    )}
+    {isLive && (
+      <svg
+        class="h-4 w-4 flex-shrink-0 text-fg-secondary transition-transform duration-200 group-hover:translate-x-1"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M5 12h14" />
+        <path d="M13 6l6 6-6 6" />
+      </svg>
+    )}
+  </div>
+</Element>
+
+<script>
+  // Favicons are fetched from third-party sites at build time and can go
+  // stale or 404 individually. Swap a broken one for the Kitfy mark rather
+  // than showing a broken image icon.
+  document.querySelectorAll<HTMLImageElement>('img[data-fallback]').forEach((img) => {
+    img.addEventListener(
+      'error',
+      () => {
+        const fallback = document.getElementById(img.dataset.fallback!);
+        fallback?.classList.remove('hidden');
+        img.remove();
+      },
+      { once: true }
+    );
+  });
+</script>

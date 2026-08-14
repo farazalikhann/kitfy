@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import ToolGrid from '../components/ToolGrid.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import CtaBand from '../components/CtaBand.astro';
+import AdSlot from '../components/AdSlot.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Kitfy',
+  url: 'https://kitfy.work',
+  logo: 'https://kitfy.work/brand/kitfy-logo-primary.svg',
+  description: 'Ten free browser based tools for documents, media, money, health and focus.',
+};
+---
+
+<Base
+  title="Kitfy, ten free browser tools in one place"
+  description="Kitfy is the home for ten free browser based tools that handle PDFs, images, video, loans, invoices, BMI, focus sounds and typing tests. No signup, no uploads, everything runs on your device."
+>
+  <JsonLd data={organizationSchema} />
+  <Hero />
+  <TrustStrip />
+  <ToolGrid />
+  <div class="mx-auto max-w-(--container-content) px-4 sm:px-6">
+    <AdSlot id="home-after-grid" height={280} />
+  </div>
+  <HowItWorks />
+  <CtaBand />
+  <div class="mx-auto max-w-(--container-content) px-4 py-16 sm:px-6">
+    <AdSlot id="home-before-footer" height={250} />
+  </div>
+</Base>

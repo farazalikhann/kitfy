@@ -1,0 +1,123 @@
+---
+import { tools, categories } from '../data/tools';
+import ToolCard from './ToolCard.astro';
+---
+
+<section id="tools" class="mx-auto max-w-(--container-content) px-4 py-16 sm:px-6 sm:py-24">
+  <div class="flex flex-col gap-2">
+    <h2 class="text-2xl font-display font-bold tracking-(--tracking-display) text-fg">Find a tool</h2>
+    <p class="font-body text-base text-fg-secondary">Search by name, or filter by what you are trying to do.</p>
+  </div>
+
+  <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div class="relative w-full sm:max-w-xs">
+      <label for="tool-search" class="sr-only">Search tools</label>
+      <input
+        id="tool-search"
+        type="search"
+        placeholder="Search tools"
+        autocomplete="off"
+        class="w-full rounded-button border border-border bg-surface px-4 py-3 font-body text-sm text-fg placeholder:text-muted"
+      />
+    </div>
+
+    <div id="tool-filters" class="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+      <button
+        type="button"
+        class="kf-chip is-active rounded-chip border border-border px-3 py-1.5 font-body text-sm font-medium text-fg-secondary"
+        data-category="all"
+      >
+        All
+      </button>
+      {categories.map((category) => (
+        <button
+          type="button"
+          class="kf-chip rounded-chip border border-border px-3 py-1.5 font-body text-sm font-medium text-fg-secondary"
+          data-category={category.toLowerCase()}
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div id="tool-grid" class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {tools.map((tool) => (
+      <div class="kf-tool-grid-item">
+        <ToolCard tool={tool} />
+      </div>
+    ))}
+  </div>
+
+  <p id="tool-empty" class="hidden py-16 text-center font-body text-base text-fg-secondary">
+    Nothing matches that. Try a broader word, or
+    <button type="button" id="tool-reset" class="font-medium text-fg underline underline-offset-4">
+      clear the filter
+    </button>
+    .
+  </p>
+</section>
+
+<style>
+  .kf-chip.is-active {
+    background: var(--kf-text);
+    border-color: var(--kf-text);
+    color: var(--kf-bg);
+  }
+</style>
+
+<script>
+  const searchInput = document.getElementById('tool-search') as HTMLInputElement | null;
+  const filterGroup = document.getElementById('tool-filters');
+  const grid = document.getElementById('tool-grid');
+  const emptyState = document.getElementById('tool-empty');
+  const resetButton = document.getElementById('tool-reset');
+
+  if (searchInput && filterGroup && grid && emptyState) {
+    const items = Array.from(grid.querySelectorAll<HTMLElement>('.kf-tool-grid-item'));
+    const chips = Array.from(filterGroup.querySelectorAll<HTMLButtonElement>('.kf-chip'));
+    let activeCategory = 'all';
+
+    const applyFilters = () => {
+      const query = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      for (const item of items) {
+        const card = item.querySelector<HTMLElement>('[data-name]');
+        if (!card) continue;
+
+        const matchesCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+        const matchesQuery =
+          query === '' ||
+          card.dataset.name?.includes(query) ||
+          card.dataset.tagline?.includes(query) ||
+          card.dataset.category?.includes(query);
+
+        const visible = matchesCategory && matchesQuery;
+        item.classList.toggle('hidden', !visible);
+        if (visible) visibleCount += 1;
+      }
+
+      emptyState.classList.toggle('hidden', visibleCount > 0);
+    };
+
+    searchInput.addEventListener('input', applyFilters);
+
+    filterGroup.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>('.kf-chip');
+      if (!button) return;
+
+      chips.forEach((chip) => chip.classList.remove('is-active'));
+      button.classList.add('is-active');
+      activeCategory = button.dataset.category ?? 'all';
+      applyFilters();
+    });
+
+    resetButton?.addEventListener('click', () => {
+      searchInput.value = '';
+      activeCategory = 'all';
+      chips.forEach((chip) => chip.classList.toggle('is-active', chip.dataset.category === 'all'));
+      applyFilters();
+    });
+  }
+</script>

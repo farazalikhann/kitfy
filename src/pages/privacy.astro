@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Privacy"
+  description="How Kitfy handles your files, the one AI exception, analytics, and ads."
+>
+  <article class="mx-auto max-w-(--container-content) px-4 py-16 sm:px-6 sm:py-24">
+    <div class="max-w-[68ch]">
+      <h1 class="text-3xl font-display font-bold tracking-(--tracking-display) text-fg">Privacy</h1>
+
+      <div class="mt-8 flex flex-col gap-6 font-body text-base leading-relaxed text-fg-secondary">
+        <h2 class="text-xl font-display font-bold tracking-(--tracking-display) text-fg">Your files</h2>
+        <p>
+          The tools process files inside your browser using JavaScript running on your own device. Files are not
+          uploaded, not stored, and not seen by anyone. Closing the tab is enough to remove everything.
+        </p>
+
+        <h2 class="mt-6 text-xl font-display font-bold tracking-(--tracking-display) text-fg">The one exception</h2>
+        <p>
+          Sprout's meal photo feature sends the image to an AI service to estimate calories. That is stated on the
+          page before you use it. No other tool sends anything anywhere.
+        </p>
+
+        <h2 class="mt-6 text-xl font-display font-bold tracking-(--tracking-display) text-fg">Analytics</h2>
+        <p>
+          Page views are counted so it is possible to tell which tools are worth maintaining. This records the
+          page, the country, and the kind of device. It does not record who you are.
+        </p>
+
+        <h2 class="mt-6 text-xl font-display font-bold tracking-(--tracking-display) text-fg">Ads</h2>
+        <p>
+          Google AdSense serves the ads and may set cookies to decide what to show you. Google's own
+          <a
+            href="https://policies.google.com/technologies/ads"
+            target="_blank"
+            rel="noopener"
+            class="text-fg underline underline-offset-4"
+          >
+            policy
+          </a> governs that, and it is linked at the bottom of this page.
+        </p>
+
+        <h2 class="mt-6 text-xl font-display font-bold tracking-(--tracking-display) text-fg">Contact</h2>
+        <p>
+          If you want anything about your usage removed, the
+          <a href="mailto:hello@kitfy.work" class="text-fg underline underline-offset-4">footer contact link</a>
+          is the way to ask.
+        </p>
+      </div>
+    </div>
+  </article>
+</Base>

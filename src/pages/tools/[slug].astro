@@ -1,0 +1,134 @@
+---
+import Base from '../../layouts/Base.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import ToolCard from '../../components/ToolCard.astro';
+import TileMark from '../../components/TileMark.astro';
+import { tools, getToolsByCategory, type Tool } from '../../data/tools';
+
+export function getStaticPaths() {
+  return tools.map((tool) => ({
+    params: { slug: tool.slug },
+    props: { tool },
+  }));
+}
+
+export interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+const related = getToolsByCategory(tool.category).filter((t) => t.slug !== tool.slug);
+
+const launchedDate = new Date(tool.launched).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const applicationCategoryMap: Record<Tool['category'], string> = {
+  Documents: 'BusinessApplication',
+  Media: 'MultimediaApplication',
+  Money: 'FinanceApplication',
+  Health: 'HealthApplication',
+  Focus: 'UtilitiesApplication',
+};
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: tool.name,
+  description: tool.description,
+  applicationCategory: applicationCategoryMap[tool.category],
+  operatingSystem: 'Any',
+  url: tool.url ?? undefined,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+};
+---
+
+<Base
+  title={`${tool.name}, ${tool.tagline.toLowerCase()}`}
+  description={tool.description}
+>
+  <JsonLd data={softwareSchema} />
+
+  <div class="mx-auto max-w-(--container-content) px-4 pt-8 sm:px-6">
+    <nav aria-label="Breadcrumb" class="font-body text-sm text-muted">
+      <a href="/" class="hover:text-fg">Kitfy</a>
+      <span class="mx-2">/</span>
+      <a href="/#tools" class="hover:text-fg">Tools</a>
+      <span class="mx-2">/</span>
+      <span class="text-fg-secondary">{tool.name}</span>
+    </nav>
+  </div>
+
+  <section class="mx-auto max-w-(--container-content) px-4 py-12 sm:px-6 sm:py-16">
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+      <div class="max-w-[60ch]">
+        <div class="flex items-center gap-4">
+          <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-button border border-line bg-white dark:border-white/10 dark:bg-ink-2">
+            {tool.favicon ? (
+              <img src={tool.favicon} alt="" width="32" height="32" loading="lazy" class="h-8 w-8 object-contain" />
+            ) : (
+              <TileMark class="h-8 w-8 text-muted opacity-40" />
+            )}
+          </span>
+          <div>
+            <h1 class="text-2xl font-display font-bold tracking-(--tracking-display) text-fg">{tool.name}</h1>
+            <p class="mt-1 font-body text-base text-fg-secondary">{tool.tagline}</p>
+          </div>
+        </div>
+
+        <p class="mt-8 font-body text-base leading-relaxed text-fg-secondary">{tool.description}</p>
+
+        <ul class="mt-8 flex flex-col gap-3">
+          {tool.features.map((feature) => (
+            <li class="flex items-start gap-3 font-body text-base text-fg-secondary">
+              <svg class="mt-1 h-4 w-4 flex-shrink-0 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+              {feature}
+            </li>
+          ))}
+        </ul>
+
+        <p class="mt-8 font-mono text-xs text-muted">Launched {launchedDate}</p>
+      </div>
+
+      <div class="flex w-full flex-col items-start gap-4 rounded-card border border-border bg-surface p-8 lg:w-80">
+        {tool.url ? (
+          <>
+            <a
+              href={tool.url}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex w-full items-center justify-center rounded-button bg-ink px-6 py-3.5 font-body text-sm font-medium text-white transition-transform hover:-translate-y-0.5"
+            >
+              Open {tool.name}
+            </a>
+            <p class="font-mono text-xs text-accent">{tool.domain}</p>
+          </>
+        ) : (
+          <>
+            <span class="rounded-chip bg-bg px-2.5 py-1 font-body text-xs font-medium text-muted">Coming soon</span>
+            <p class="font-body text-sm text-fg-secondary">
+              This tool is not live yet. Check back once a domain is registered.
+            </p>
+          </>
+        )}
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="mx-auto max-w-(--container-content) px-4 py-12 sm:px-6 sm:py-16">
+      <h2 class="text-xl font-display font-bold tracking-(--tracking-display) text-fg">More tools like this</h2>
+      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {related.map((relatedTool) => <ToolCard tool={relatedTool} />)}
+      </div>
+    </section>
+  )}
+</Base>

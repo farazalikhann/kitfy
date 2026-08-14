@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="What is Kitfy"
+  description="Kitfy is ten small web tools kept in one place, built by one developer, funded by ads instead of subscriptions."
+>
+  <article class="mx-auto max-w-(--container-content) px-4 py-16 sm:px-6 sm:py-24">
+    <div class="max-w-[68ch]">
+      <h1 class="text-3xl font-display font-bold tracking-(--tracking-display) text-fg">What is Kitfy</h1>
+
+      <div class="mt-8 flex flex-col gap-6 font-body text-base leading-relaxed text-fg-secondary">
+        <p>
+          Kitfy is ten small web tools kept in one place. Each one solves a single problem that comes up during a
+          normal working day, like a video that is too big to send or a bank statement that arrived as a PDF when
+          you needed a spreadsheet.
+        </p>
+        <p>
+          They are separate sites with their own domains. Kitfy is the shelf they sit on, so you only have to
+          remember one address instead of ten.
+        </p>
+
+        <h2 class="mt-6 text-xl font-display font-bold tracking-(--tracking-display) text-fg">
+          Why they run in the browser
+        </h2>
+        <p>
+          Most tools like these upload your file to a server, do the work there, and send it back. That is slower,
+          and it means a document you did not want to share has been sitting on someone else's machine. Kitfy's
+          tools use the browser's own capabilities instead, so the file is never transmitted. It is faster on large
+          files and there is nothing to trust.
+        </p>
+
+        <h2 class="mt-6 text-xl font-display font-bold tracking-(--tracking-display) text-fg">How it is paid for</h2>
+        <p>
+          Ads on the pages, not subscriptions. Nothing is behind a signup and no feature is held back for a paid
+          tier, because there is no paid tier.
+        </p>
+
+        <h2 class="mt-6 text-xl font-display font-bold tracking-(--tracking-display) text-fg">Who builds it</h2>
+        <p>
+          One developer, working on these in the open. If a tool is broken or you want one that does not exist yet,
+          the <a href="mailto:hello@kitfy.work" class="text-fg underline underline-offset-4">contact link</a> in the
+          footer reaches a real inbox.
+        </p>
+      </div>
+    </div>
+  </article>
+</Base>

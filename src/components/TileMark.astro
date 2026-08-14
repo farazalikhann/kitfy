@@ -1,0 +1,25 @@
+---
+// The Kitfy mark: four tiles on the logo's 40:8:11 size:gap:radius ratio.
+// Renders in `currentColor` so callers control appearance (muted fallback
+// icon, or an accent colour) purely through the class they pass in.
+export interface Props {
+  class?: string;
+  id?: string;
+}
+
+const { class: className, id } = Astro.props;
+---
+
+<svg
+  id={id}
+  class={className}
+  viewBox="0 0 88 88"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <rect x="0" y="0" width="40" height="40" rx="11" fill="currentColor" />
+  <rect x="48" y="0" width="40" height="40" rx="11" fill="currentColor" />
+  <rect x="0" y="48" width="40" height="40" rx="11" fill="currentColor" />
+  <rect x="48" y="48" width="40" height="40" rx="11" fill="currentColor" />
+</svg>

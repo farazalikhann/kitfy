@@ -1,0 +1,60 @@
+---
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { title, description, canonical, ogImage, noindex } = Astro.props;
+
+// Set PUBLIC_GA_ID in your environment to turn on analytics. Left unset
+// in development and in this repo's example env files on purpose.
+const gaId = import.meta.env.PUBLIC_GA_ID as string | undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/brand/kitfy-favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/brand/favicon-32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/brand/favicon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#10182B" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO title={title} description={description} canonical={canonical} ogImage={ogImage} noindex={noindex} />
+
+    <!--
+      GA4 placeholder. No tracking runs until PUBLIC_GA_ID is set at build
+      time (Cloudflare Pages project settings, or a local .env file).
+      This is intentionally left disconnected from any live property.
+    -->
+    {gaId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

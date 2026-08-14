@@ -1,0 +1,55 @@
+---
+import { tools } from '../data/tools';
+
+const columns: { heading: string; categories: typeof tools[number]['category'][] }[] = [
+  { heading: 'Documents & media', categories: ['Documents', 'Media'] },
+  { heading: 'Money', categories: ['Money'] },
+  { heading: 'Health & focus', categories: ['Health', 'Focus'] },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-ink">
+  <div class="mx-auto max-w-(--container-content) px-4 py-16 sm:px-6 sm:py-24">
+    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+      <div>
+        <a href="/" class="inline-flex items-center" aria-label="Kitfy home">
+          <img src="/brand/kitfy-logo-on-dark.svg" alt="Kitfy" width="244" height="88" class="h-7 w-auto" />
+        </a>
+        <p class="mt-4 max-w-[32ch] font-body text-sm text-muted">
+          Ten free browser tools for the small jobs that come up during a normal working day. Built and maintained
+          by one developer.
+        </p>
+      </div>
+
+      {columns.map((column) => (
+        <div>
+          <h2 class="font-display text-sm font-bold text-white">{column.heading}</h2>
+          <ul class="mt-4 flex flex-col gap-3">
+            {tools
+              .filter((tool) => column.categories.includes(tool.category))
+              .map((tool) => (
+                <li>
+                  <a
+                    href={`/tools/${tool.slug}/`}
+                    class="font-body text-sm text-muted transition-colors hover:text-mint"
+                  >
+                    {tool.name}
+                  </a>
+                </li>
+              ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-16 flex flex-col gap-4 border-t border-line-dark pt-8 font-body text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {year} Kitfy. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a href="/privacy" class="hover:text-mint">Privacy</a>
+        <a href="mailto:hello@kitfy.work" class="hover:text-mint">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>

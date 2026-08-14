@@ -1,0 +1,89 @@
+---
+import Base from './Base.astro';
+import AdSlot from '../components/AdSlot.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  readingMinutes: number;
+}
+
+const { title, description, date, readingMinutes } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Base title={title} description={description}>
+  <article class="mx-auto max-w-(--container-content) px-4 py-16 sm:px-6 sm:py-24">
+    <div class="max-w-[68ch]">
+      <nav aria-label="Breadcrumb" class="font-body text-sm text-muted">
+        <a href="/" class="hover:text-fg">Kitfy</a>
+        <span class="mx-2">/</span>
+        <a href="/blog/" class="hover:text-fg">Blog</a>
+      </nav>
+
+      <h1 class="mt-6 text-3xl font-display font-bold tracking-(--tracking-display) text-fg">{title}</h1>
+
+      <p class="mt-4 font-mono text-xs text-muted">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        <span class="mx-2">/</span>
+        {readingMinutes} min read
+      </p>
+
+      <div class="kf-prose mt-10 font-body text-base leading-relaxed text-fg-secondary">
+        <slot />
+      </div>
+
+      <div class="mt-12">
+        <AdSlot id="blog-mid-article" height={250} />
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .kf-prose :global(h2) {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-xl);
+    letter-spacing: var(--tracking-display);
+    color: var(--kf-text);
+  }
+
+  .kf-prose :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .kf-prose :global(a) {
+    color: var(--kf-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .kf-prose :global(ul),
+  .kf-prose :global(ol) {
+    margin: 0 0 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .kf-prose :global(li) {
+    list-style: disc;
+  }
+
+  .kf-prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--kf-surface);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+  }
+</style>

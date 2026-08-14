@@ -1,0 +1,52 @@
+---
+---
+
+<section class="bg-ink">
+  <div class="mx-auto flex max-w-(--container-content) flex-col items-start gap-6 px-4 py-16 sm:px-6 sm:py-24">
+    <h2 class="text-2xl font-display font-bold tracking-(--tracking-display) text-white">Bookmark it once</h2>
+    <p class="max-w-[50ch] font-body text-base text-slate-light">
+      Next time you need to shrink a video or pull a table out of a PDF, you will already know where it is.
+    </p>
+    <div class="flex flex-col items-start gap-3">
+      <button
+        type="button"
+        id="kf-bookmark"
+        class="inline-flex items-center justify-center rounded-button bg-mint px-6 py-3.5 font-body text-sm font-medium text-ink transition-transform hover:-translate-y-0.5"
+      >
+        Save kitfy.work
+      </button>
+      <p id="kf-bookmark-hint" class="hidden font-body text-sm text-slate-light" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Modern browsers do not let a page add itself to bookmarks; the old
+  // sidebar.addPanel / external.AddFavorite APIs only ever existed in
+  // legacy Firefox and IE. Try those, and be upfront about the keyboard
+  // shortcut everywhere else rather than pretending the click did something.
+  const button = document.getElementById('kf-bookmark');
+  const hint = document.getElementById('kf-bookmark-hint');
+
+  button?.addEventListener('click', () => {
+    const w = window as unknown as {
+      sidebar?: { addPanel: (title: string, url: string, customize: string) => void };
+      external?: { AddFavorite: (url: string, title: string) => void };
+    };
+
+    if (w.sidebar?.addPanel) {
+      w.sidebar.addPanel(document.title, location.href, '');
+      return;
+    }
+    if (w.external?.AddFavorite) {
+      w.external.AddFavorite(location.href, document.title);
+      return;
+    }
+
+    if (hint) {
+      const isMac = navigator.platform.toLowerCase().includes('mac');
+      hint.textContent = isMac ? 'Press Cmd+D to bookmark this page.' : 'Press Ctrl+D to bookmark this page.';
+      hint.classList.remove('hidden');
+    }
+  });
+</script>

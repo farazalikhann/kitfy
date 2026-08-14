@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import ToolGrid from '../components/ToolGrid.astro';
+---
+
+<Base title="Page not found" description="This page does not exist. Here are all ten Kitfy tools." noindex>
+  <section class="mx-auto max-w-(--container-content) px-4 pb-4 pt-16 sm:px-6 sm:pt-24">
+    <p class="font-mono text-xs font-medium text-accent">404</p>
+    <h1 class="mt-4 text-2xl font-display font-bold tracking-(--tracking-display) text-fg">
+      This page is not here
+    </h1>
+    <p class="mt-4 max-w-[50ch] font-body text-base text-fg-secondary">
+      The link may be old, or the address may have been typed wrong. Here is every Kitfy tool instead.
+    </p>
+  </section>
+
+  <ToolGrid />
+</Base>

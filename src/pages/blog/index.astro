@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base
+  title="Blog"
+  description="Notes on browser based tools, file privacy, and getting real work done without uploading your files."
+>
+  <section class="mx-auto max-w-(--container-content) px-4 py-16 sm:px-6 sm:py-24">
+    <h1 class="text-3xl font-display font-bold tracking-(--tracking-display) text-fg">Blog</h1>
+    <p class="mt-4 max-w-[50ch] font-body text-base text-fg-secondary">
+      Notes on how these tools work, and how to get files into the shape you actually need.
+    </p>
+
+    <ul class="mt-12 flex flex-col gap-8">
+      {posts.map((post) => (
+        <li class="border-t border-border pt-8 first:border-t-0 first:pt-0">
+          <a href={`/blog/${post.id}/`} class="group flex flex-col gap-2">
+            <time datetime={post.data.date.toISOString()} class="font-mono text-xs text-muted">
+              {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+            <h2 class="text-lg font-display font-bold text-fg group-hover:underline">{post.data.title}</h2>
+            <p class="font-body text-sm text-fg-secondary">{post.data.description}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

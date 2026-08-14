@@ -1,0 +1,18 @@
+---
+const facts = ['10 tools live', 'Free forever', 'No account needed', 'Files stay on your device'];
+---
+
+<div class="border-y border-border">
+  <ul class="mx-auto flex max-w-(--container-content) flex-wrap px-4 sm:px-6">
+    {facts.map((fact, i) => (
+      <li
+        class:list={[
+          'py-4 pr-6 font-body text-sm text-muted',
+          i > 0 && 'border-l border-border pl-6',
+        ]}
+      >
+        {fact}
+      </li>
+    ))}
+  </ul>
+</div>

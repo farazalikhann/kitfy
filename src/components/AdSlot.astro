@@ -1,0 +1,36 @@
+---
+// Placeholder ad container. No AdSense client or slot ID is wired up here
+// on purpose, this repo should never ship with a live ad ID by accident.
+//
+// To go live:
+//   1. Add the AdSense loader script (with your publisher ID) to the
+//      <head> in src/layouts/Base.astro, once for the whole site.
+//   2. Replace the comment below with an <ins class="adsbygoogle"> tag
+//      using data-ad-slot={id}.
+//   3. Call (adsbygoogle = window.adsbygoogle || []).push({}) right after.
+// Keep the height prop matched to the ad unit you configure. That fixed
+// height is what stops the page from jumping when the ad loads, fails to
+// load, or is blocked.
+export interface Props {
+  id: string;
+  height?: number;
+}
+
+const { id, height = 280 } = Astro.props;
+---
+
+<div class="kf-ad-slot" style={`height:${height}px`} data-ad-slot={id}>
+  <span class="font-mono text-xs text-muted">Advertisement</span>
+  <!-- AdSense unit goes here. See the comment above for wiring instructions. -->
+</div>
+
+<style>
+  .kf-ad-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--kf-border);
+    border-radius: var(--radius-card);
+    background: var(--kf-surface);
+  }
+</style>

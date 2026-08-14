@@ -1,0 +1,62 @@
+---
+const navLinks = [
+  { href: '/#tools', label: 'Tools' },
+  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Blog' },
+];
+---
+
+<header id="site-header" class="sticky top-0 z-40 h-[72px] bg-bg border-b border-transparent transition-colors">
+  <div class="mx-auto flex h-full max-w-(--container-content) items-center justify-between px-4 sm:px-6">
+    <a href="/" class="flex items-center" aria-label="Kitfy home">
+      <img class="kf-logo-light h-8 w-auto" src="/brand/kitfy-logo-primary.svg" alt="Kitfy" width="244" height="88" />
+      <img class="kf-logo-dark h-8 w-auto" src="/brand/kitfy-logo-on-dark.svg" alt="Kitfy" width="244" height="88" />
+    </a>
+
+    <nav aria-label="Primary" class="hidden items-center gap-8 md:flex">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="font-body text-sm font-medium text-fg-secondary transition-colors hover:text-fg"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <details class="relative md:hidden">
+      <summary class="list-none cursor-pointer select-none font-body text-sm font-medium text-fg-secondary marker:content-none [&::-webkit-details-marker]:hidden">
+        Menu
+      </summary>
+      <nav
+        aria-label="Primary"
+        class="absolute right-0 top-[calc(100%+8px)] flex w-44 flex-col gap-1 rounded-card border border-border bg-surface p-2 shadow-lg"
+      >
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="rounded-chip px-3 py-2 font-body text-sm font-medium text-fg-secondary hover:bg-bg hover:text-fg"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  #site-header.is-scrolled {
+    border-bottom-color: var(--kf-border);
+  }
+</style>
+
+<script>
+  const header = document.getElementById('site-header');
+  const onScroll = () => {
+    if (!header) return;
+    header.classList.toggle('is-scrolled', window.scrollY > 20);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

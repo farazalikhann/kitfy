@@ -1,0 +1,21 @@
+{
+  "name": "Kitfy",
+  "short_name": "Kitfy",
+  "description": "Ten free browser based tools, one home. No accounts, no uploads.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#10182B",
+  "background_color": "#F7F8FA",
+  "icons": [
+    {
+      "src": "/brand/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

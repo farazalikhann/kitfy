@@ -1,0 +1,36 @@
+---
+const steps = [
+  {
+    lead: 'Pick a tool.',
+    rest: 'Open the one you need. There is no signup, no trial, and no card on file.',
+  },
+  {
+    lead: 'Do the job in the tab.',
+    rest: 'The work happens on your own machine, so a large file is not waiting on an upload.',
+  },
+  {
+    lead: 'Close it and move on.',
+    rest: 'Nothing is stored, so there is nothing to delete afterwards.',
+  },
+];
+---
+
+<section class="mx-auto max-w-(--container-content) px-4 py-16 sm:px-6 sm:py-24">
+  <h2 class="text-2xl font-display font-bold tracking-(--tracking-display) text-fg">How it works</h2>
+
+  <ol class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6">
+    {steps.map((step, i) => (
+      <li class="flex flex-col gap-3">
+        <span class="font-mono text-xs text-accent">{String(i + 1).padStart(2, '0')}</span>
+        <p class="font-body text-base text-fg-secondary">
+          <span class="font-display font-bold text-fg">{step.lead}</span> {step.rest}
+        </p>
+      </li>
+    ))}
+  </ol>
+
+  <p class="mt-10 max-w-[60ch] font-body text-sm text-muted">
+    Your files are read by your browser and never sent to a server. That is not a policy promise, it is how the
+    tools are built.
+  </p>
+</section>
