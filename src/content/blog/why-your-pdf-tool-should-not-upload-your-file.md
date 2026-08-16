@@ -35,6 +35,6 @@ Offline behavior is the simplest test of all. If a tool keeps working with your 
 
 This is worth caring about most when the document itself is the sensitive part. A signed contract, a medical form, a document with a client's financial details, a passport scan you are resizing for a form. These are exactly the files people reach for a free online tool to handle quickly, without thinking about where the file goes in between.
 
-[PdfKit](/tools/pdfkit/) merges, splits, and compresses PDFs entirely in the browser, and [StatementKit](/tools/statementkit/) turns a bank statement PDF into a spreadsheet the same way, both without a server involved at any point. Neither needs an account, and neither can see your file, because it never receives it.
+[PdfKit](../../tools/pdfkit/) merges, splits, and compresses PDFs entirely in the browser, and [StatementKit](../../tools/statementkit/) turns a bank statement PDF into a spreadsheet the same way, both without a server involved at any point. Neither needs an account, and neither can see your file, because it never receives it.
 
 The next time you reach for a free PDF tool, it is worth spending ten seconds checking which kind you have opened. For most documents it will not matter. For the ones that do, it is the difference between a job that happened entirely on your machine and one you have to hope was handled responsibly by someone else.

@@ -1,6 +1,7 @@
 ---
 import type { Tool } from '../data/tools';
 import TileMark from './TileMark.astro';
+import { withBase } from '../utils/url';
 
 export interface Props {
   tool: Tool;
@@ -26,7 +27,7 @@ const fallbackId = `kf-fallback-${tool.slug}`;
     >
       {tool.favicon ? (
         <img
-          src={tool.favicon}
+          src={withBase(tool.favicon)}
           alt=""
           width="28"
           height="28"

@@ -21,7 +21,7 @@ Multi page statements make this worse, since headers repeat, page numbers get pa
 
 A tool built specifically for this reads the PDF's layout rather than just its text stream. It looks at where each fragment sits on the page, groups fragments that align into rows, and identifies which vertical bands of the page correspond to which column, whether that is the date, the description, the debit amount, the credit amount, or the running balance. Because it understands the table structure rather than just the raw text, it can output an actual spreadsheet with each value in the correct cell, one row per transaction.
 
-This is what [StatementKit](/tools/statementkit/) does. You upload the statement PDF, it reads the layout, and it hands back an Excel file with separate columns for date, description, debit, credit, and balance, matching what the statement showed. Because the processing happens in your browser, the statement itself, which is a document with your full account activity on it, is never uploaded anywhere.
+This is what [StatementKit](../../tools/statementkit/) does. You upload the statement PDF, it reads the layout, and it hands back an Excel file with separate columns for date, description, debit, credit, and balance, matching what the statement showed. Because the processing happens in your browser, the statement itself, which is a document with your full account activity on it, is never uploaded anywhere.
 
 ## A practical walkthrough
 

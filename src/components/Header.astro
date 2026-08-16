@@ -1,16 +1,18 @@
 ---
+import { withBase } from '../utils/url';
+
 const navLinks = [
-  { href: '/#tools', label: 'Tools' },
-  { href: '/about', label: 'About' },
-  { href: '/blog', label: 'Blog' },
+  { href: withBase('/#tools'), label: 'Tools' },
+  { href: withBase('/about'), label: 'About' },
+  { href: withBase('/blog'), label: 'Blog' },
 ];
 ---
 
 <header id="site-header" class="sticky top-0 z-40 h-[72px] bg-bg border-b border-transparent transition-colors">
   <div class="mx-auto flex h-full max-w-(--container-content) items-center justify-between px-4 sm:px-6">
-    <a href="/" class="flex items-center" aria-label="Kitfy home">
-      <img class="kf-logo-light h-8 w-auto" src="/brand/kitfy-logo-primary.svg" alt="Kitfy" width="244" height="88" />
-      <img class="kf-logo-dark h-8 w-auto" src="/brand/kitfy-logo-on-dark.svg" alt="Kitfy" width="244" height="88" />
+    <a href={withBase('/')} class="flex items-center" aria-label="Kitfy home">
+      <img class="kf-logo-light h-8 w-auto" src={withBase('/brand/kitfy-logo-primary.svg')} alt="Kitfy" width="244" height="88" />
+      <img class="kf-logo-dark h-8 w-auto" src={withBase('/brand/kitfy-logo-on-dark.svg')} alt="Kitfy" width="244" height="88" />
     </a>
 
     <nav aria-label="Primary" class="hidden items-center gap-8 md:flex">

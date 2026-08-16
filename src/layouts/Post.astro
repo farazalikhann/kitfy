@@ -1,6 +1,7 @@
 ---
 import Base from './Base.astro';
 import AdSlot from '../components/AdSlot.astro';
+import { withBase } from '../utils/url';
 
 export interface Props {
   title: string;
@@ -22,9 +23,9 @@ const formattedDate = date.toLocaleDateString('en-US', {
   <article class="mx-auto max-w-(--container-content) px-4 py-16 sm:px-6 sm:py-24">
     <div class="max-w-[68ch]">
       <nav aria-label="Breadcrumb" class="font-body text-sm text-muted">
-        <a href="/" class="hover:text-fg">Kitfy</a>
+        <a href={withBase('/')} class="hover:text-fg">Kitfy</a>
         <span class="mx-2">/</span>
-        <a href="/blog/" class="hover:text-fg">Blog</a>
+        <a href={withBase('/blog/')} class="hover:text-fg">Blog</a>
       </nav>
 
       <h1 class="mt-6 text-3xl font-display font-bold tracking-(--tracking-display) text-fg">{title}</h1>
