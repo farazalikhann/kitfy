@@ -5,8 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://farazalikhann.github.io',
-  base: '/kitfy',
+  site: 'https://kitfy.work',
   output: 'static',
   integrations: [sitemap()],
   vite: {

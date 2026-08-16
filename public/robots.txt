@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://farazalikhann.github.io/kitfy/sitemap-index.xml
+Sitemap: https://kitfy.work/sitemap-index.xml
